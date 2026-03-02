@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن - Car World</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="script.js" defer></script>
+    <style>
+        /* تنسيقات إضافية خاصة بصفحة من نحن */
+        
+        .about-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e9ecef 100%);
+        }
+        
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .about-header h1 {
+            font-size: 48px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .about-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 2px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        
+        .about-header p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 30px auto 0;
+        }
+        
+        .mission-vision {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .mission-card,
+        .vision-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: var(--border-radius-md);
+            border: var(--glass-border);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .mission-card::before,
+        .vision-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .mission-card:hover::before,
+        .vision-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .mission-card:hover,
+        .vision-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .mission-card i,
+        .vision-card i {
+            font-size: 60px;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+        }
+        
+        .mission-card h2,
+        .vision-card h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        
+        .mission-card p,
+        .vision-card p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        
+        .values-section {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        
+        .values-section h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .values-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .value-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: var(--border-radius-sm);
+            border: var(--glass-border);
+            transition: var(--transition-base);
+        }
+        
+        .value-item:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px var(--primary-glow);
+        }
+        
+        .value-item i {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 8px var(--primary-glow));
+        }
+        
+        .value-item h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+        
+        .value-item p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        
+        .team-section {
+            text-align: center;
+        }
+        
+        .team-section h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .team-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .team-member {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px 20px;
+            border-radius: var(--border-radius-md);
+            border: var(--glass-border);
+            transition: var(--transition-smooth);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .member-image {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px var(--primary-glow);
+        }
+        
+        .member-image i {
+            font-size: 70px;
+            color: white;
+        }
+        
+        .team-member h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+        
+        .team-member .position {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .team-member .bio {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .member-social a {
+            width: 35px;
+            height: 35px;
+            background: rgba(13, 110, 253, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            transition: var(--transition-base);
+            text-decoration: none;
+        }
+        
+        .member-social a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .project-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 40px;
+            box-shadow: 0 5px 20px var(--primary-glow);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h2 class="logo">Car World</h2>
+        <nav>
+            <a href="index.html" class="btn">الرئيسية</a>
+            <a href="cars.html" class="btn">تصفح السيارات</a>
+            <a href="stats.html" class="btn">الإحصائيات</a>
+            <a href="about.html" class="btn active">من نحن</a>
+            <a href="contact.html" class="btn">اتصل بنا</a>
+            <a href="faq.html" class="btn">الأسئلة الشائعة</a>
+        </nav>
+    </header>
+
+    <section class="about-section">
+        <div class="about-container">
+            <div class="about-header">
+                <h1>من نحن</h1>
+                <p>نحن فريق Car World، ستة طلاب من قسم نظم المعلومات الإدارية، اجتمعنا لنقدم لكم منصة متكاملة لبيع وشراء السيارات في مصر.</p>
+            </div>
+
+            <div class="mission-vision">
+                <div class="mission-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h2>رسالتنا</h2>
+                    <p>نسعى لتقديم أفضل منصة إلكترونية متكاملة لبيع وشراء السيارات، تجمع بين الشفافية والموثوقية وأحدث التقنيات لتسهيل عملية البحث والشراء. نهدف لخلق تجربة سلسة وآمنة لكل من البائعين والمشترين.</p>
+                </div>
+                <div class="vision-card">
+                    <i class="fas fa-eye"></i>
+                    <h2>رؤيتنا</h2>
+                    <p>أن نكون المنصة الرائدة في العالم العربي في مجال بيع وشراء السيارات، وأن نحدث ثورة في طريقة تفكير الناس عند شراء سياراتهم. نطمح لبناء مجتمع رقمي متكامل يربط عشاق السيارات والبائعين الموثوقين.</p>
+                </div>
+            </div>
+
+            <div class="values-section">
+                <h2>قيمنا الأساسية</h2>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h3>الثقة</h3>
+                        <p>نبني علاقات طويلة المدى مع عملائنا على أساس من الصدق والشفافية</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-star"></i>
+                        <h3>الجودة</h3>
+                        <p>نقدم فقط أفضل السيارات عالية الجودة من مصادر موثوقة</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-rocket"></i>
+                        <h3>الابتكار</h3>
+                        <p>نستخدم أحدث التقنيات لتطوير منصتنا وتحسين تجربة المستخدم</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-users"></i>
+                        <h3>العملاء أولاً</h3>
+                        <p>نضع احتياجات عملائنا في مقدمة أولوياتنا في كل خطوة</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-section">
+                <h2>فريق التطوير - مشروع التخرج</h2>
+                <div class="team-grid">
+                    <!-- يحيى فارس -->
+                    <div class="team-member">
+                        <div class="member-image">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>يحيى فارس</h3>
+                        <p class="position">مطور ويب Full Stack</p>
+                        <p class="bio">مطور ويب متكامل مسؤول عن تطوير واجهات المستخدم والخوادم وقواعد البيانات.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- احمد مجدي -->
+                    <div class="team-member">
+                        <div class="member-image">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>أحمد مجدي</h3>
+                        <p class="position">مطور ويب Front-End</p>
+                        <p class="bio">مطور واجهات أمامية مسؤول عن تصميم وتطوير واجهات المستخدم وتجربة الاستخدام.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- احمد محمد صلاح -->
+                    <div class="team-member">
+                        <div class="member-image">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <h3>أحمد محمد صلاح</h3>
+                        <p class="position">مطور ويب Back-End</p>
+                        <p class="bio">مطور خوادم مسؤول عن قواعد البيانات وبناء API وتطوير المنطق البرمجي للموقع.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- عمر عادل -->
+                    <div class="team-member">
+                        <div class="member-image">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>عمر عادل</h3>
+                        <p class="position">مطور قواعد بيانات</p>
+                        <p class="bio">مختص في تصميم وإدارة قواعد البيانات وتطوير الاستعلامات وتحسين الأداء.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- مصطفى عادل -->
+                    <div class="team-member">
+                        <div class="member-image">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>مصطفى عادل</h3>
+                        <p class="position">مطور ويب متجاوب</p>
+                        <p class="bio">متخصص في تطوير واجهات متجاوبة تعمل على جميع الأجهزة والمنصات المختلفة.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- مصطفى سليمان -->
+                    <div class="team-member">
+                        <div class="member-image">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <h3>مصطفى سليمان</h3>
+                        <p class="position">مطور ويب واختبارات</p>
+                        <p class="bio">مطور ومسؤول عن اختبار الكود والتأكد من خلوه من الأخطاء وتحسين أداء الموقع.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- شعار المشروع -->
+                <div class="project-badge">
+                    <i class="fas fa-graduation-cap"></i> مشروع تخرج 2026 - تسويق وتجاره الكترونى</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Car World</h3>
+                <p>منصة رائدة في بيع وشراء السيارات في مصر</p>
+                <p style="margin-top: 10px; font-size: 14px; color: var(--primary-color);">
+                    <i class="fas fa-users"></i> فريق تطوير من 6 مطورين - مشروع تخرج
+                </p>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                    <li><a href="faq.html">الأسئلة الشائعة</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>تابعنا</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Car World - مشروع تخرج | فريق التطوير: يحيى، أحمد، أحمد، عمر، مصطفى، مصطفى</p>
+        </div>
+    </footer>
+</body>
+
+</html>

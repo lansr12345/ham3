@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car World - الرئيسية</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <h2 class="logo">Car World</h2>
+        <nav>
+            <a href="index.html" class="btn active">الرئيسية</a>
+            <a href="cars.html" class="btn">تصفح السيارات</a>
+            <a href="stats.html" class="btn">الإحصائيات</a>
+            <a href="about.html" class="btn">من نحن</a>
+            <a href="contact.html" class="btn">اتصل بنا</a>
+            <a href="faq.html" class="btn">الأسئلة الشائعة</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>اشتري عربيتك بسهولة</h1>
+        <p>منصة لعرض وبيع السيارات بأفضل الأسعار</p>
+        <a href="cars.html" class="btn big-btn">ابدأ الآن</a>
+    </section>
+
+    <section id="features" class="features">
+        <h2 class="section-title">ليه تختار Car World</h2>
+        <div class="features-box">
+            <div class="feature">
+                <i class="fas fa-car icon-large"></i>
+                <h3>تنوع كبير</h3>
+                <p>أكثر من 60 سيارة جديدة ومستعملة من أشهر الماركات العالمية</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-search icon-large"></i>
+                <h3>بحث سهل</h3>
+                <p>فلترة متقدمة وبحث ذكي للوصول لسيارة أحلامك</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-wallet icon-large"></i>
+                <h3>أسعار مناسبة</h3>
+                <p>أسعار تناسب كل الفئات مع خيارات دفع متعددة</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cars" class="cars-preview">
+        <h2 class="section-title">عربيات مميزة</h2>
+        <div class="cars-box">
+            <div class="car-card" onclick="window.location.href='car-details.html?category=luxury&brand=BMW&model=X5'">
+                <img src="assets/images/img1894BMW-X5.jpg" alt="BMW X5" class="car-card-image" />
+                <h3>BMW X5</h3>
+                <p class="price">3,150,000 جنيه</p>
+                <span class="badge new">جديد</span>
+            </div>
+            <div class="car-card" onclick="window.location.href='car-details.html?category=luxury&brand=Mercedes&model=S500'">
+                <img src="assets/images/mercedes-s-class-s500-1708352796658.webp" alt="Mercedes S500" class="car-card-image" />
+                <h3>Mercedes S500</h3>
+                <p class="price">3,800,000 جنيه</p>
+                <span class="badge new">جديد</span>
+            </div>
+            <div class="car-card" onclick="window.location.href='car-details.html?category=luxury&brand=Audi&model=Q7'">
+                <img src="assets/images/2017-audi-q7-first-drive-review-car-and-driver-photo-658873-s-original.avif" alt="Audi Q7" class="car-card-image" />
+                <h3>Audi Q7</h3>
+                <p class="price">2,500,000 جنيه</p>
+                <span class="badge used">مستعمل</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Car World</h3>
+                <p>منصة رائدة في بيع وشراء السيارات في مصر</p>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                    <li><a href="faq.html">الأسئلة الشائعة</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>تابعنا</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Car World - مشروع تخرج</p>
+        </div>
+    </footer>
+</body>
+</html>

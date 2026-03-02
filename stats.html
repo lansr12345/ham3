@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإحصائيات - Car World</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="script.js" defer></script>
+    <style>
+        /* تنسيقات إضافية خاصة بصفحة الإحصائيات */
+        
+        .stats-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e9ecef 100%);
+        }
+        
+        .stats-container-page {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .stats-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .stats-header h1 {
+            font-size: 48px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .stats-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 2px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        
+        .stats-header p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 30px auto 0;
+        }
+        /* كروت الإحصائيات الرئيسية */
+        
+        .main-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .main-stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px 30px;
+            border-radius: var(--border-radius-md);
+            border: var(--glass-border);
+            text-align: center;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .main-stat-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .main-stat-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 30px var(--primary-glow);
+        }
+        
+        .stat-icon i {
+            font-size: 40px;
+            color: white;
+        }
+        
+        .main-stat-card h3 {
+            font-size: 22px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+        /* إحصائيات الدول */
+        
+        .countries-stats {
+            margin-bottom: 60px;
+        }
+        
+        .section-subtitle {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .section-subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+        }
+        
+        .countries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        
+        .country-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: var(--border-radius-sm);
+            border: var(--glass-border);
+            text-align: center;
+            transition: var(--transition-base);
+        }
+        
+        .country-card:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px var(--primary-glow);
+        }
+        
+        .country-flag {
+            font-size: 48px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+        }
+        
+        .country-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        
+        .country-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .country-stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .country-stats i {
+            color: var(--primary-color);
+        }
+        /* إحصائيات الماركات */
+        
+        .brands-stats {
+            margin-bottom: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: var(--border-radius-md);
+            border: var(--glass-border);
+        }
+        
+        .brands-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .brand-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            transition: var(--transition-base);
+        }
+        
+        .brand-stat-item:hover {
+            transform: translateX(-10px);
+            background: rgba(13, 110, 253, 0.1);
+        }
+        
+        .brand-name {
+            min-width: 120px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .brand-bar-container {
+            flex: 1;
+            height: 30px;
+            background: rgba(13, 110, 253, 0.1);
+            border-radius: 50px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .brand-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 50px;
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        
+        .brand-bar span {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .brand-count {
+            min-width: 80px;
+            text-align: left;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        /* إحصائيات السنوات */
+        
+        .years-stats {
+            margin-bottom: 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .year-stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: var(--border-radius-sm);
+            border: var(--glass-border);
+            text-align: center;
+            transition: var(--transition-base);
+        }
+        
+        .year-stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+        
+        .year-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .year-stats-detail {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            color: var(--text-muted);
+            margin-top: 15px;
+        }
+        /* جدول التوزيع */
+        
+        .distribution-table {
+            margin-bottom: 40px;
+            overflow-x: auto;
+        }
+        
+        .distribution-table table {
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: var(--border-radius-md);
+            border: var(--glass-border);
+            overflow: hidden;
+            border-collapse: collapse;
+        }
+        
+        .distribution-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+        }
+        
+        .distribution-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(13, 110, 253, 0.1);
+            color: var(--text-dark);
+        }
+        
+        .distribution-table tr:hover {
+            background: rgba(13, 110, 253, 0.1);
+        }
+        
+        .total-row {
+            background: rgba(13, 110, 253, 0.2);
+            font-weight: 600;
+        }
+        
+        .total-row td {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        /* متجاوب */
+        
+        @media (max-width: 768px) {
+            .brand-stat-item {
+                flex-wrap: wrap;
+            }
+            .brand-name {
+                min-width: 100%;
+                text-align: center;
+            }
+            .brand-bar-container {
+                width: 100%;
+            }
+            .brand-count {
+                min-width: 100%;
+                text-align: center;
+            }
+            .countries-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .countries-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h2 class="logo">Car World</h2>
+        <nav>
+            <a href="index.html" class="btn">الرئيسية</a>
+            <a href="cars.html" class="btn">تصفح السيارات</a>
+            <a href="stats.html" class="btn active">الإحصائيات</a>
+            <a href="about.html" class="btn">من نحن</a>
+            <a href="contact.html" class="btn">اتصل بنا</a>
+            <a href="faq.html" class="btn">الأسئلة الشائعة</a>
+        </nav>
+    </header>
+
+    <section class="stats-section">
+        <div class="stats-container-page">
+            <div class="stats-header">
+                <h1>إحصائيات Car World</h1>
+                <p>نظرة شاملة على منصتنا وأعداد السيارات المتاحة حسب الماركات والدول والسنوات</p>
+            </div>
+
+            <!-- الكروت الرئيسية -->
+            <div class="main-stats-grid" id="mainStats">
+                <!-- البيانات هتتحط عن طريق JavaScript -->
+            </div>
+
+            <!-- إحصائيات الدول -->
+            <div class="countries-stats">
+                <h2 class="section-subtitle">توزيع السيارات حسب الدول</h2>
+                <div class="countries-grid" id="countriesStats">
+                    <!-- البيانات هتتحط عن طريق JavaScript -->
+                </div>
+            </div>
+
+            <!-- إحصائيات الماركات -->
+            <div class="brands-stats">
+                <h2 class="section-subtitle">أكثر الماركات توفراً</h2>
+                <div class="brands-chart" id="brandsChart">
+                    <!-- البيانات هتتحط عن طريق JavaScript -->
+                </div>
+            </div>
+
+            <!-- إحصائيات السنوات -->
+            <h2 class="section-subtitle">توزيع السيارات حسب السنة</h2>
+            <div class="years-stats" id="yearsStats">
+                <!-- البيانات هتتحط عن طريق JavaScript -->
+            </div>
+
+            <!-- جدول التوزيع التفصيلي -->
+            <div class="distribution-table">
+                <h2 class="section-subtitle">جدول تفصيلي للسيارات</h2>
+                <table id="distributionTable">
+                    <thead>
+                        <tr>
+                            <th>التصنيف</th>
+                            <th>الماركة</th>
+                            <th>الموديل</th>
+                            <th>السنة</th>
+                            <th>الحالة</th>
+                            <th>الدولة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- البيانات هتتحط عن طريق JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Car World</h3>
+                <p>منصة رائدة في بيع وشراء السيارات في مصر</p>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                    <li><a href="faq.html">الأسئلة الشائعة</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>تابعنا</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Car World - مشروع تخرج</p>
+        </div>
+    </footer>
+
+    <script>
+        // دالة لجمع الإحصائيات من cars object الموجود في script.js
+        function gatherStats() {
+            // التأكد أن cars موجود
+            if (typeof cars === 'undefined') {
+                console.error('cars object not found');
+                return {
+                    total: 0,
+                    new: 0,
+                    used: 0,
+                    brands: 0,
+                    countries: {},
+                    brandsData: {},
+                    years: {
+                        '2024': 0,
+                        '2025': 0
+                    },
+                    tableRows: []
+                };
+            }
+
+            let stats = {
+                total: 0,
+                new: 0,
+                used: 0,
+                brands: new Set(),
+                countries: {
+                    'ألمانيا': 0,
+                    'اليابان': 0,
+                    'كوريا الجنوبية': 0,
+                    'فرنسا': 0
+                },
+                brandsData: {},
+                years: {
+                    '2024': 0,
+                    '2025': 0
+                },
+                tableRows: []
+            };
+
+            // المرور على كل السيارات
+            for (let category in cars) {
+                for (let brand in cars[category]) {
+                    stats.brands.add(brand);
+
+                    if (!stats.brandsData[brand]) {
+                        stats.brandsData[brand] = 0;
+                    }
+
+                    for (let car of cars[category][brand]) {
+                        stats.total++;
+                        stats.brandsData[brand]++;
+
+                        if (car.condition === 'new') stats.new++;
+                        else if (car.condition === 'used') stats.used++;
+
+                        if (stats.countries.hasOwnProperty(car.country)) {
+                            stats.countries[car.country]++;
+                        }
+
+                        if (stats.years.hasOwnProperty(car.year)) {
+                            stats.years[car.year]++;
+                        }
+
+                        // إضافة صف للجدول
+                        stats.tableRows.push({
+                            category: category === 'luxury' ? 'فاخرة' : (category === 'medium' ? 'متوسطة' : 'اقتصادية'),
+                            brand: brand,
+                            model: car.model,
+                            year: car.year,
+                            condition: car.condition === 'new' ? 'جديد' : 'مستعمل',
+                            country: car.country
+                        });
+                    }
+                }
+            }
+
+            stats.brands = stats.brands.size;
+            return stats;
+        }
+
+        // دالة عرض الإحصائيات
+        function displayStats() {
+            const stats = gatherStats();
+
+            // الكروت الرئيسية
+            const mainStats = document.getElementById('mainStats');
+            if (mainStats) {
+                mainStats.innerHTML = `
+                    <div class="main-stat-card">
+                        <div class="stat-icon"><i class="fas fa-car"></i></div>
+                        <h3>إجمالي السيارات</h3>
+                        <div class="stat-number">${stats.total}</div>
+                        <div class="stat-label">سيارة متاحة</div>
+                    </div>
+                    <div class="main-stat-card">
+                        <div class="stat-icon"><i class="fas fa-tag"></i></div>
+                        <h3>سيارات جديدة</h3>
+                        <div class="stat-number">${stats.new}</div>
+                        <div class="stat-label">${((stats.new/stats.total)*100).toFixed(1)}%</div>
+                    </div>
+                    <div class="main-stat-card">
+                        <div class="stat-icon"><i class="fas fa-history"></i></div>
+                        <h3>سيارات مستعملة</h3>
+                        <div class="stat-number">${stats.used}</div>
+                        <div class="stat-label">${((stats.used/stats.total)*100).toFixed(1)}%</div>
+                    </div>
+                    <div class="main-stat-card">
+                        <div class="stat-icon"><i class="fas fa-trademark"></i></div>
+                        <h3>الماركات</h3>
+                        <div class="stat-number">${stats.brands}</div>
+                        <div class="stat-label">ماركة مختلفة</div>
+                    </div>
+                `;
+            }
+
+            // إحصائيات الدول
+            const countriesStats = document.getElementById('countriesStats');
+            if (countriesStats) {
+                const countries = [{
+                    name: 'ألمانيا',
+                    flag: '🇩🇪',
+                    count: stats.countries['ألمانيا'],
+                    color: '#000',
+                    icon: 'fa-brands fa-german'
+                }, {
+                    name: 'اليابان',
+                    flag: '🇯🇵',
+                    count: stats.countries['اليابان'],
+                    color: '#bc002d',
+                    icon: 'fa-brands fa-japan'
+                }, {
+                    name: 'كوريا الجنوبية',
+                    flag: '🇰🇷',
+                    count: stats.countries['كوريا الجنوبية'],
+                    color: '#003478',
+                    icon: 'fa-brands fa-korea'
+                }, {
+                    name: 'فرنسا',
+                    flag: '🇫🇷',
+                    count: stats.countries['فرنسا'],
+                    color: '#0055a4',
+                    icon: 'fa-brands fa-france'
+                }];
+
+                countriesStats.innerHTML = countries.map(c => `
+                    <div class="country-card">
+                        <div class="country-flag">${c.flag}</div>
+                        <div class="country-name">${c.name}</div>
+                        <div class="stat-number" style="font-size: 36px;">${c.count}</div>
+                        <div class="country-stats">
+                            <span><i class="fas fa-car"></i> ${c.count}</span>
+                            <span><i class="fas fa-percent"></i> ${((c.count/stats.total)*100).toFixed(1)}%</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // رسم بياني للماركات
+            const brandsChart = document.getElementById('brandsChart');
+            if (brandsChart) {
+                // ترتيب الماركات تنازلياً وأخذ أول 10
+                const sortedBrands = Object.entries(stats.brandsData)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 10);
+
+                const maxCount = sortedBrands[0][1];
+
+                brandsChart.innerHTML = sortedBrands.map(([brand, count]) => {
+                    const percentage = (count / maxCount) * 100;
+                    return `
+                        <div class="brand-stat-item">
+                            <div class="brand-name">${brand}</div>
+                            <div class="brand-bar-container">
+                                <div class="brand-bar" style="width: ${percentage}%">
+                                    <span>${count}</span>
+                                </div>
+                            </div>
+                            <div class="brand-count">${count} سيارة</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // إحصائيات السنوات
+            const yearsStats = document.getElementById('yearsStats');
+            if (yearsStats) {
+                yearsStats.innerHTML = `
+                    <div class="year-stat-card">
+                        <div class="year-number">2024</div>
+                        <div class="stat-number" style="font-size: 36px;">${stats.years['2024']}</div>
+                        <div class="year-stats-detail">
+                            <span><i class="fas fa-new"></i> جديد: ${stats.tableRows.filter(r => r.year === 2024 && r.condition === 'جديد').length}</span>
+                            <span><i class="fas fa-used"></i> مستعمل: ${stats.tableRows.filter(r => r.year === 2024 && r.condition === 'مستعمل').length}</span>
+                        </div>
+                    </div>
+                    <div class="year-stat-card">
+                        <div class="year-number">2025</div>
+                        <div class="stat-number" style="font-size: 36px;">${stats.years['2025']}</div>
+                        <div class="year-stats-detail">
+                            <span><i class="fas fa-new"></i> جديد: ${stats.tableRows.filter(r => r.year === 2025 && r.condition === 'جديد').length}</span>
+                            <span><i class="fas fa-used"></i> مستعمل: ${stats.tableRows.filter(r => r.year === 2025 && r.condition === 'مستعمل').length}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // الجدول التفصيلي
+            const tableBody = document.getElementById('tableBody');
+            if (tableBody) {
+                tableBody.innerHTML = stats.tableRows.map(row => `
+                    <tr>
+                        <td>${row.category}</td>
+                        <td>${row.brand}</td>
+                        <td>${row.model}</td>
+                        <td>${row.year}</td>
+                        <td><span class="badge" style="position: relative; top: 0; right: 0; display: inline-block; background: ${row.condition === 'جديد' ? 'linear-gradient(135deg, #0d6efd, #0b5ed7)' : 'linear-gradient(135deg, #6c757d, #5a6268)'};">${row.condition}</span></td>
+                        <td>${row.country}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // تشغيل عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // انتظر شوية عشان نتأكد أن cars object اتحمل من script.js
+            setTimeout(displayStats, 100);
+        });
+    </script>
+</body>
+
+</html>

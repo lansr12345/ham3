@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأسئلة الشائعة - Car World</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="script.js" defer></script>
+    <style>
+        /* تنسيقات إضافية خاصة بصفحة الأسئلة الشائعة */
+        
+        .faq-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e9ecef 100%);
+            min-height: 70vh;
+        }
+        
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .faq-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .faq-header h1 {
+            font-size: 48px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .faq-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 2px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        
+        .faq-header p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 30px auto 0;
+        }
+        
+        .faq-search {
+            margin-bottom: 50px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .faq-search input {
+            width: 100%;
+            max-width: 600px;
+            padding: 18px 30px;
+            border: 2px solid rgba(13, 110, 253, 0.2);
+            border-radius: 50px;
+            font-family: "Cairo", sans-serif;
+            font-size: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            transition: var(--transition-base);
+        }
+        
+        .faq-search input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px var(--primary-soft-glow);
+        }
+        
+        .faq-search button {
+            padding: 0 40px;
+            white-space: nowrap;
+        }
+        
+        .faq-categories {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(13, 110, 253, 0.2);
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: var(--transition-base);
+            font-size: 16px;
+        }
+        
+        .category-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px var(--primary-glow);
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 5px 20px var(--primary-glow);
+        }
+        
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .faq-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: var(--border-radius-md);
+            border: var(--glass-border);
+            overflow: hidden;
+            transition: var(--transition-base);
+        }
+        
+        .faq-item:hover {
+            transform: translateX(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .faq-question {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition-base);
+        }
+        
+        .faq-question:hover {
+            background: rgba(13, 110, 253, 0.1);
+        }
+        
+        .faq-question h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .faq-question i {
+            color: var(--primary-color);
+            font-size: 20px;
+            transition: var(--transition-base);
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        
+        .faq-answer p {
+            padding: 25px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 16px;
+            border-top: 1px solid rgba(13, 110, 253, 0.1);
+        }
+        
+        .still-have-questions {
+            text-align: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            padding: 60px;
+            border-radius: var(--border-radius-md);
+            border: var(--glass-border);
+            margin-top: 50px;
+        }
+        
+        .still-have-questions i {
+            font-size: 70px;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 20px var(--primary-glow));
+        }
+        
+        .still-have-questions h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
+        .still-have-questions p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-base);
+            box-shadow: 0 5px 20px var(--primary-glow);
+        }
+        
+        .contact-btn.whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px currentColor;
+        }
+        
+        .contact-btn i {
+            font-size: 20px;
+            margin: 0 !important;
+            filter: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            .faq-search {
+                flex-direction: column;
+            }
+            .faq-search button {
+                width: 100%;
+            }
+            .still-have-questions {
+                padding: 40px 20px;
+            }
+            .contact-buttons {
+                flex-direction: column;
+            }
+            .contact-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h2 class="logo">Car World</h2>
+        <nav>
+            <a href="index.html" class="btn">الرئيسية</a>
+            <a href="cars.html" class="btn">تصفح السيارات</a>
+            <a href="stats.html" class="btn">الإحصائيات</a>
+            <a href="about.html" class="btn">من نحن</a>
+            <a href="contact.html" class="btn">اتصل بنا</a>
+            <a href="faq.html" class="btn active">الأسئلة الشائعة</a>
+        </nav>
+    </header>
+
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h1>الأسئلة الشائعة</h1>
+                <p>أهم الأسئلة التي تهم عملائنا وإجاباتها. ابحث عن سؤالك أو تصفح الفئات المختلفة.</p>
+            </div>
+
+            <div class="faq-search">
+                <input type="text" id="faqSearch" placeholder="🔍 ابحث عن سؤال (مثلاً: الضمان، التقسيط، الشحن...)" />
+                <button class="btn" onclick="searchFAQ()">بحث</button>
+            </div>
+
+            <div class="faq-categories">
+                <button class="category-btn active" onclick="filterFAQ('all', this)">الكل</button>
+                <button class="category-btn" onclick="filterFAQ('شراء', this)">🛒 الشراء</button>
+                <button class="category-btn" onclick="filterFAQ('دفع', this)">💰 الدفع</button>
+                <button class="category-btn" onclick="filterFAQ('ضمان', this)">🔧 الضمان</button>
+                <button class="category-btn" onclick="filterFAQ('شحن', this)">🚚 الشحن</button>
+                <button class="category-btn" onclick="filterFAQ('صيانة', this)">🔨 الصيانة</button>
+            </div>
+
+            <div class="faq-grid" id="faqGrid">
+                <!-- الأسئلة سيتم إضافتها هنا عن طريق JavaScript -->
+            </div>
+
+            <div class="still-have-questions">
+                <i class="fas fa-question-circle"></i>
+                <h2>لم تجد سؤالك؟</h2>
+                <p>فريق خدمة العملاء جاهز للإجابة على جميع استفساراتك على مدار الساعة</p>
+                <div class="contact-buttons">
+                    <a href="contact.html" class="contact-btn">
+                        <i class="fas fa-envelope"></i> اتصل بنا
+                    </a>
+                    <a href="https://wa.me/201033139027" class="contact-btn whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> واتساب
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Car World</h3>
+                <p>منصة رائدة في بيع وشراء السيارات في مصر</p>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                    <li><a href="faq.html">الأسئلة الشائعة</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>تابعنا</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Car World - مشروع تخرج</p>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات الأسئلة الشائعة
+        const faqData = [{
+            question: "كيف يمكنني شراء سيارة من Car World؟",
+            answer: "عملية الشراء سهلة جداً: 1) تصفح السيارات المتاحة. 2) اختر السيارة التي تناسبك. 3) اضغط على 'شراء عبر واتساب' للتواصل مع فريق المبيعات. 4) أكمل إجراءات الشراء مع فريقنا. نحن ندعمك خطوة بخطوة حتى استلام السيارة.",
+            category: "شراء"
+        }, {
+            question: "ما هي طرق الدفع المتاحة؟",
+            answer: "نوفر عدة طرق للدفع: دفع نقدي (مع خصومات خاصة)، تقسيط مرن حتى 84 شهراً، دفع عبر بطاقات الائتمان، وتحويل بنكي. يختلف نظام التقسيط حسب كل سيئة وفئة، ويمكنك معرفة التفاصيل في صفحة السيارة.",
+            category: "دفع"
+        }, {
+            question: "هل السيارات عليها ضمان؟",
+            answer: "نعم، جميع السيارات الجديدة تأتي مع ضمان الوكالة (غالباً 5 سنوات أو 100,000 كم). السيارات المستعملة تخضع لفحص شامل ولها ضمان لمدة عام ضد عيوب الصناعة الأساسية. بعض السيارات المستعملة قد يكون متبقي من ضمان الوكالة.",
+            category: "ضمان"
+        }, {
+            question: "كم تستغرق عملية الشحن والتسليم؟",
+            answer: "مدة الشحن تعتمد على موقعك: القاهرة الكبرى: 1-2 يوم عمل. المحافظات: 3-5 أيام عمل. المدن الجديدة: 2-4 أيام عمل. نوفر خدمة التوصيل حتى باب المنزل مع معاينة السيارة قبل الاستلام. تكلفة الشحن مجانية داخل القاهرة، وللمحافظات برسوم رمزية.",
+            category: "شحن"
+        }, {
+            question: "هل يمكنني تجربة قيادة السيارة قبل الشراء؟",
+            answer: "نعم، نوفر خدمة تجربة القيادة في مقرنا بالقاهرة الجديدة. يمكنك حجز موعد لتجربة أي سيارة متاحة. ننصح دائماً بتجربة القيادة قبل اتخاذ قرار الشراء النهائي. للمسافرين خارج القاهرة، يمكننا ترتيب معاينة عبر فيديو كول.",
+            category: "شراء"
+        }, {
+            question: "ما هي المستندات المطلوبة للتقسيط؟",
+            answer: "المستندات الأساسية: صورة بطاقة الرقم القومي، إثبات دخل (إيصال مرتب أو سجل تجاري)، إيصال مرافق حديث، مقدم الحجز. قد تطلب البنوك مستندات إضافية حسب كل حالة. فريقنا سيساعدك في تجهيز جميع الأوراق.",
+            category: "دفع"
+        }, {
+            question: "هل تقومون بفحص السيارات المستعملة قبل البيع؟",
+            answer: "نعم، كل سيارة مستعملة تخضع لفحص شامل مكون من 120 نقطة فحص بواسطة مهندسين متخصصين، يتضمن فحص المحرك، ناقل الحركة، الهيكل، الكهرباء، التكييف، وأنظمة الأمان. تحصل على تقرير فحص معتمد مع السيارة.",
+            category: "ضمان"
+        }, {
+            question: "كيف تتم صيانة السيارة بعد الشراء؟",
+            answer: "نوفر خدمة ما بعد البيع عبر شركائنا من مراكز الصيانة المعتمدة. نوفر جدول صيانة دورية لكل سيارة، وخدمة عملاء للمتابعة، وقطع غيار أصلية. للسيارات الجديدة، الصيانة الأولى مجانية خلال أول 6 شهور.",
+            category: "صيانة"
+        }, {
+            question: "هل يمكن استبدال السيارة بعد الشراء؟",
+            answer: "نعم، نوفر خدمة استبدال السيارات خلال أول 14 يوماً من الشراء بسيارة أخرى مع دفع فرق السعر (إن وجد). بعد هذه الفترة، يمكنك الاستفادة من خدمة إعادة الشراء أو استبدال سيارتك بسيارة أخرى من معرضنا بقيمة سوقية عادلة.",
+            category: "شراء"
+        }, {
+            question: "ما هي تكاليف الشحن للمحافظات؟",
+            answer: "رسوم الشحن: 1500 جنيه للمحافظات القريبة (الغربية، المنوفية، البحيرة)، 2000 جنيه للمحافظات البعيدة (المنيا، أسيوط، سوهاج)، 3000 جنيه لحدود الجمهورية (الأقصر، أسوان، مطروح). الشحن مجاني داخل القاهرة والإسكندرية.",
+            category: "شحن"
+        }, {
+            question: "هل توفرون تمويل لجميع الفئات؟",
+            answer: "نعم، نتعامل مع جميع البنوك الكبرى في مصر لتوفير تمويل يناسب الجميع: موظفين (حكومي وقطاع خاص)، أعمال حرة، أصحاب معاشات، وشركات. الدفعة الأولى تبدأ من 10% حسب شروط كل بنك وفئة العميل.",
+            category: "دفع"
+        }, {
+            question: "كم مرة يجب عمل صيانة دورية للسيارة؟",
+            answer: "يُنصح بعمل صيانة دورية كل 6 شهور أو 10,000 كم أيهما أقرب. نشحن لك تذكير قبل موعد الصيانة. الصيانة تشمل تغيير الزيت، فلتر الهواء، فحص الفرامل، فحص الإطارات، وفحص شامل للسيارة. نقدم عروضاً خاصة لباقات الصيانة.",
+            category: "صيانة"
+        }];
+
+        // دالة عرض الأسئلة
+        function displayFAQs(filterCategory = 'all', searchTerm = '') {
+            const grid = document.getElementById('faqGrid');
+            if (!grid) return;
+
+            let filteredFAQs = faqData;
+
+            if (filterCategory !== 'all') {
+                filteredFAQs = filteredFAQs.filter(faq => faq.category === filterCategory);
+            }
+
+            if (searchTerm) {
+                filteredFAQs = filteredFAQs.filter(faq =>
+                    faq.question.includes(searchTerm) ||
+                    faq.answer.includes(searchTerm)
+                );
+            }
+
+            if (filteredFAQs.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results" style="text-align: center; padding: 60px;">
+                        <i class="fas fa-search" style="font-size: 60px; color: var(--primary-color); margin-bottom: 20px;"></i>
+                        <h3>لا توجد نتائج للبحث</h3>
+                        <p style="color: var(--text-muted); margin-top: 10px;">حاول بكلمات بحث مختلفة أو اختر تصنيف آخر</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredFAQs.map((faq, index) => `
+                <div class="faq-item" data-category="${faq.category}">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>${index + 1}. ${faq.question}</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>${faq.answer}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // افتح أول سؤال تلقائياً
+            const firstFaq = document.querySelector('.faq-item');
+            if (firstFaq) {
+                firstFaq.classList.add('active');
+            }
+        }
+
+        // دالة toggle للأسئلة
+        window.toggleFAQ = function(element) {
+            const faqItem = element.closest('.faq-item');
+            faqItem.classList.toggle('active');
+        };
+
+        // دالة فلترة حسب التصنيف
+        window.filterFAQ = function(category, btn) {
+            // تحديث الأزرار
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // فلترة
+            displayFAQs(category, document.getElementById('faqSearch').value);
+        };
+
+        // دالة البحث
+        window.searchFAQ = function() {
+            const searchTerm = document.getElementById('faqSearch').value.trim();
+            const activeCategoryBtn = document.querySelector('.category-btn.active');
+            let category = 'all';
+
+            if (activeCategoryBtn && activeCategoryBtn.innerText !== 'الكل') {
+                category = activeCategoryBtn.innerText.replace(/[🔧💰🛒🚚🔨]/g, '').trim();
+            }
+
+            displayFAQs(category, searchTerm);
+        };
+
+        // تشغيل عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            displayFAQs();
+
+            // إضافة خاصية البحث عند الضغط على Enter
+            document.getElementById('faqSearch').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    searchFAQ();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
